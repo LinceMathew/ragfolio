@@ -8,10 +8,15 @@ type Message = { role: 'user' | 'assistant'; content: string }
 export function Chatbot() {
   const [messages, setMessages] = useState<Message[]>([])
   const [loading, setLoading] = useState(false)
-  const messagesEndRef = useRef<HTMLDivElement>(null)
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTo({
+        top: scrollContainerRef.current.scrollHeight,
+        behavior: 'smooth'
+      })
+    }
   }
 
   useEffect(() => {
@@ -65,7 +70,10 @@ export function Chatbot() {
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
           className="rounded-3xl border border-zinc-800 bg-zinc-900/40 backdrop-blur-xl overflow-hidden flex flex-col shadow-2xl shadow-blue-500/5 ring-1 ring-white/5"
         >
-          <div className="flex-1 overflow-y-auto p-6 space-y-2 custom-scrollbar">
+          <div
+            ref={scrollContainerRef}
+            className="flex-1 overflow-y-auto p-6 space-y-2 custom-scrollbar"
+          >
             <AnimatePresence initial={false}>
               {messages.length === 0 ? (
                 <motion.div
@@ -105,7 +113,6 @@ export function Chatbot() {
                 </div>
               </motion.div>
             )}
-            <div ref={messagesEndRef} />
           </div>
           <ChatInput onSend={handleSend} disabled={loading} isFirstTime={messages.length === 0} />
         </motion.div>
