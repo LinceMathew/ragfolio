@@ -51,7 +51,7 @@ function Write-Warn {
 function Write-Fatal {
     param([string]$msg)
     Write-Host "[ERROR] $msg"
-    exit 1
+    throw $msg
 }
 
 # ---------------------------------------------------------------------------
@@ -462,11 +462,21 @@ Host github.com
 # Main installation pipeline
 # ---------------------------------------------------------------------------
 
-Install-Curl
-Install-Python
-Install-Git
-Install-NvmAndNode
-New-SshKeyPair -email $rawEmail -sanitizedEmail $sanitizedEmail
+try {
+    Install-Curl
+    Install-Python
+    Install-Git
+    Install-NvmAndNode
+    New-SshKeyPair -email $rawEmail -sanitizedEmail $sanitizedEmail
 
-Write-Host ""
-Write-Ok "All steps completed successfully."
+    Write-Host ""
+    Write-Ok "All steps completed successfully."
+} catch {
+    Write-Host ""
+    Write-Host "[ERROR] Installer stopped: $_"
+}
+
+Write-Host "Script finished. This window will stay open. Press Ctrl+C when you want to exit."
+while ($true) {
+    Start-Sleep -Seconds 3600
+}
