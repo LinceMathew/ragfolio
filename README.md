@@ -19,6 +19,24 @@ Before you begin, ensure you have the following installed:
 - [Node.js & npm](https://nodejs.org/)
 - A **Google Gemini API Key** (Get it from [Google AI Studio](https://aistudio.google.com/))
 
+Windows
+
+```powershell  
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+iwr https://raw.githubusercontent.com/HexmosTech/ragfolio/main/one-line-prerequisites-installer.ps1 -OutFile installer.ps1
+powershell -NoExit -ExecutionPolicy Bypass -File .\installer.ps1
+```
+
+Linux
+
+```bash  
+curl -fsSL https://raw.githubusercontent.com/HexmosTech/ragfolio/main/one-line-prerequisites-installer.sh -o one-line-prerequisites-installer.sh && chmod 777 one-line-prerequisites-installer.sh && ./one-line-prerequisites-installer.sh
+```
+
+Video: https://tinyurl.com/ai-job-ready-install-vid
+
+Doc: https://tinyurl.com/ai-job-ready-prerequisites-doc
+
 ---
 
 ## 💻 Local Development
@@ -88,7 +106,12 @@ The `./render-build.sh` script automatically:
 - **API Prefixing**: All backend routes are prefixed with `/api` to avoid collisions with frontend routes.
 - **SPA Support**: The backend includes a catch-all route that serves `index.html` for any non-API path, allowing React Router to work perfectly in production.
 
+
+ 
+ 
+
 ---
 
 ## �️ Related Projects
 [git-lrc](https://github.com/HexmosTech/git-lrc): Free, Unlimited AI Code Reviews That Run on Commit. Stop bugs before they land.
+

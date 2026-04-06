@@ -168,7 +168,7 @@ def save_to_vector_store(
         )
         print(f"  Stored {end}/{len(chunks)} chunks")
 
-    print(f"Successfully stored {len(chunks)} chunks at {CHROMA_DB_DIR}.")
+    print(f"Successfully stored {len(chunks)} chunks at {CHROMA_DB_DIR}.sqlite3")
 
 
 def build_vector_store(input_dir: str = None) -> None:
