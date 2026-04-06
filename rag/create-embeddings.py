@@ -171,11 +171,6 @@ def save_to_vector_store(
     print(f"Successfully stored {len(chunks)} chunks at {CHROMA_DB_DIR}.sqlite3")
 
 
-def this_is_a_test() -> None:  # Dummy function to ensure the file is not empty for testing purposes
-    pass
-def sample_function() -> None:  # Another dummy function to ensure the file is not empty for testing purposes
-    pass
-
 def build_vector_store(input_dir: str = None) -> None:
     """Orchestrate the full ingestion pipeline from files to database."""
     if input_dir is None:
