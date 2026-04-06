@@ -122,15 +122,6 @@ def compute_embeddings(chunks: List[str]) -> List[List[float]]:
     model = TextEmbedding(model_name=EMBEDDING_MODEL_NAME)
     all_embeddings: List[List[float]] = []
 
-    print("Computing embeddings in batches...")
-    for start in range(0, len(chunks), ENCODE_BATCH_SIZE):
-        batch = chunks[start : start + ENCODE_BATCH_SIZE]
-        for emb in model.embed(batch):
-            all_embeddings.append(emb.tolist())
-        print(f"  Encoded {min(start + ENCODE_BATCH_SIZE, len(chunks))}/{len(chunks)} chunks")
-
-    return all_embeddings
-
 
 def save_to_vector_store(
     chunks: List[str], embeddings: List[List[float]], metadatas: List[dict]
@@ -180,13 +171,6 @@ def build_vector_store(input_dir: str = None) -> None:
     """Orchestrate the full ingestion pipeline from files to database."""
     if input_dir is None:
         input_dir = INPUT_DATA_DIR
-
-    # 1. Load and chunk all input files
-    chunks, metadatas = load_input_chunks(input_dir)
-
-    # 2. Generate embeddings for each chunk
-    embeddings = compute_embeddings(chunks)
-
     # 3. Save everything to the database
     save_to_vector_store(chunks, embeddings, metadatas)
 
