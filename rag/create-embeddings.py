@@ -135,40 +135,43 @@ def compute_embeddings(chunks: List[str]) -> List[List[float]]:
 def save_to_vector_store(
     chunks: List[str], embeddings: List[List[float]], metadatas: List[dict]
 ) -> None:
-    """Clear existing data and save new embeddings to ChromaDB."""
-    if len(chunks) != len(embeddings) or len(chunks) != len(metadatas):
-        raise ValueError("chunks/embeddings/metadatas must be the same length")
+    """Save chunks, embeddings, and metadata into the ChromaDB vector store."""
+    if not (len(chunks) == len(embeddings) == len(metadatas)):
+        raise ValueError("chunks, embeddings, and metadatas must have equal lengths")
 
     os.makedirs(CHROMA_DB_DIR, exist_ok=True)
     from chromadb.config import Settings
-    client = chromadb.PersistentClient(
-        path=CHROMA_DB_DIR, 
-        settings=Settings(anonymized_telemetry=False)
+    db_client = chromadb.PersistentClient(
+        path=CHROMA_DB_DIR,
+        settings=Settings(anonymized_telemetry=False),
     )
 
-    # Safely clear the collection by deleting and recreating it
     try:
-        client.delete_collection(name=COLLECTION_NAME)
+        db_client.delete_collection(name=COLLECTION_NAME)
     except Exception:
-        pass  # Collection likely doesn't exist yet
+        pass
 
-    collection = client.get_or_create_collection(name=COLLECTION_NAME)
+    collection = db_client.get_or_create_collection(name=COLLECTION_NAME)
+    print("Saving embeddings to ChromaDB...")
 
-    print("Storing embeddings in ChromaDB...")
-    for start in range(0, len(chunks), DB_ADD_BATCH_SIZE):
-        end = min(start + DB_ADD_BATCH_SIZE, len(chunks))
+    def _batch_bounds(offset: int) -> tuple[int, int]:
+        return offset, min(offset + DB_ADD_BATCH_SIZE, len(chunks))
+
+    for offset in range(0, len(chunks), DB_ADD_BATCH_SIZE):
+        start, stop = _batch_bounds(offset)
+        document_ids = [
+            f"{metadatas[idx].get('source', 'unknown')}::chunk-{metadatas[idx].get('chunk_index', idx)}"
+            for idx in range(start, stop)
+        ]
         collection.add(
-            ids=[
-                f"{metadatas[i].get('source','unknown')}::chunk-{metadatas[i].get('chunk_index', i)}"
-                for i in range(start, end)
-            ],
-            documents=chunks[start:end],
-            embeddings=embeddings[start:end],
-            metadatas=metadatas[start:end],
+            ids=document_ids,
+            documents=chunks[start:stop],
+            embeddings=embeddings[start:stop],
+            metadatas=metadatas[start:stop],
         )
-        print(f"  Stored {end}/{len(chunks)} chunks")
+        print(f"  Stored {stop}/{len(chunks)} chunks")
 
-    print(f"Successfully stored {len(chunks)} chunks at {CHROMA_DB_DIR}.sqlite3")
+    print(f"Stored {len(chunks)} chunks in {CHROMA_DB_DIR}.sqlite3")
 
 
 def build_vector_store(input_dir: str = None) -> None:
