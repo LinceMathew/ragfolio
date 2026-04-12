@@ -2,10 +2,10 @@ import { motion } from 'framer-motion'
 
 export function Skills() {
     const categories = [
-        { name: 'Languages', skills: ['Python', 'Go', 'JavaScript', 'TypeScript', 'Java'] },
-        { name: 'Frontend', skills: ['React', 'React Native', 'Astro', 'Tailwind CSS', 'Figma'] },
-        { name: 'Backend', skills: ['Django', 'Node.js', 'PostgreSQL', 'Parse'] },
-        { name: 'AI & Systems', skills: ['Prompt Engineering', 'Meilisearch', 'Token Optimization', 'DevOps'] },
+        { id: 'languages', name: 'Languages', skills: ['Python', 'Go', 'JavaScript', 'TypeScript', 'Java'] },
+        { id: 'frontend', name: 'Frontend', skills: ['React', 'React Native', 'Astro', 'Tailwind CSS', 'Figma'] },
+        { id: 'backend', name: 'Backend', skills: ['Django', 'Node.js', 'PostgreSQL', 'Parse'] },
+        { id: 'ai-systems', name: 'AI & Systems', skills: ['Prompt Engineering', 'Meilisearch', 'Token Optimization', 'DevOps'] },
     ]
 
     return (
@@ -15,7 +15,7 @@ export function Skills() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     {categories.map((cat, idx) => (
                         <motion.div
-                            key={cat.name}
+                            key={cat.id}
                             initial={{ opacity: 0, scale: 0.95 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}

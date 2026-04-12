@@ -3,11 +3,13 @@ import { motion } from 'framer-motion'
 export function Projects() {
   const projects = [
     {
+      id: 'liveapi',
       title: 'LiveAPI',
       description: 'Automated API documentation system that parses repositories. Features payment handling, license management, and optimized AI prompt engineering to reduce token usage.',
       tags: ['Python (Django)', 'Node.js', 'Go', 'React', 'PostgreSQL']
     },
     {
+      id: 'freedevtools',
       title: 'FreeDevTools',
       description: 'Large-scale developer resource platform with 125,000+ static pages. Achieved 8M+ search impressions through deep SEO optimization and Meilisearch integration.',
       tags: ['Astro', 'Meilisearch', 'SEO', 'SSG']
@@ -21,7 +23,7 @@ export function Projects() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {projects.map((project, idx) => (
             <motion.div
-              key={project.title}
+              key={project.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
