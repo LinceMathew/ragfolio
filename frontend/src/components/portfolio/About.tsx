@@ -4,10 +4,11 @@ export function About() {
       <div className="max-w-4xl mx-auto">
         <h2 className="text-2xl font-semibold text-white mb-4">About</h2>
         <p className="text-zinc-400 leading-relaxed">
-          I'm a passionate developer dedicated to creating high-performance applications.
-          With a strong foundation in both frontend and backend technologies, I enjoy
-          tackling complex problems and turning ideas into reality through clean,
-          maintainable code.
+          I am a full-stack software engineer with a product-oriented mindset and deep experience 
+          in building real-world systems. My background spans backend architecture, 
+          frontend development, and DevOps, refined through a long-term internship at Hexmos. 
+          I specialize in creating scalable developer tools and optimizing AI/LLM workflows 
+          for efficiency and performance.
         </p>
       </div>
     </section>
