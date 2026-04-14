@@ -24,16 +24,7 @@ export function Skills() {
                             <h3 className="text-sm font-medium text-zinc-500 uppercase tracking-wider mb-4 border-b border-zinc-900 pb-2">
                                 {cat.name}
                             </h3>
-                            <div className="flex flex-wrap gap-2">
-                                {cat.skills.map((skill) => (
-                                    <span
-                                        key={skill}
-                                        className="px-3 py-1.5 rounded-lg bg-zinc-900/50 border border-zinc-800 text-zinc-300 text-xs hover:border-zinc-700 transition-colors"
-                                    >
-                                        {skill}
-                                    </span>
-                                ))}
-                            </div>
+                          
                         </motion.div>
                     ))}
                 </div>
