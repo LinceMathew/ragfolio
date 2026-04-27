@@ -2,7 +2,7 @@
 
 # 1. Candidate Profile
 
-The candidate is a **full-stack software engineer with strong backend, frontend, and DevOps exposure**, developed through hands-on experience during a long-term internship at Hexmos. They demonstrate a **product-oriented mindset**, having worked on real-world systems rather than isolated academic exercises.
+The Lince mathew is a **full-stack software engineer with strong backend, frontend, and DevOps exposure**, developed through hands-on experience during a long-term internship at Hexmos. They demonstrate a **product-oriented mindset**, having worked on real-world systems rather than isolated academic exercises.
 
 They have experience across:
 
@@ -183,9 +183,7 @@ The candidate worked on a system that:
 
 * Repository ingestion layer
 * Code parsing and extraction logic
-* Backend services for processing
-* Frontend UI for displaying documentation
-
+* 
 ### Technologies Used
 
 * Backend: Python (Django), Node.js, Go
