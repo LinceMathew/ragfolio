@@ -13,8 +13,7 @@ export function Hero() {
           Hi, I'm <span className="text-blue-500">Lince Mathew</span>
         </h1>
         <p className="text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed">
-          Full-Stack Software Engineer specializing in building scalable developer tools, 
-          AI documentation systems, and high-performance applications.
+          Full-stack software engineer with a product-oriented mindset, specializing in scalable backend systems, robust APIs, and modern frontend experiences.
         </p>
       </motion.div>
     </section>

@@ -1,3 +1,5 @@
+import { BackendStatus } from '../BackendStatus'
+
 export function Header() {
   return (
     <header className="border-b border-zinc-800/80 sticky top-0 z-10 bg-zinc-950/90 backdrop-blur">
@@ -6,6 +8,7 @@ export function Header() {
           Lince Mathew
         </a>
         <nav className="flex items-center gap-6">
+          <BackendStatus />
           <a href="#experience" className="text-sm text-zinc-400 hover:text-white transition-colors">Experience</a>
           <a href="#projects" className="text-sm text-zinc-400 hover:text-white transition-colors">Projects</a>
         </nav>

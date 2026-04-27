@@ -4,11 +4,7 @@ export function About() {
       <div className="max-w-4xl mx-auto">
         <h2 className="text-2xl font-semibold text-white mb-4">About</h2>
         <p className="text-zinc-400 leading-relaxed">
-          I am a full-stack software engineer with a product-oriented mindset and deep experience 
-          in building real-world systems. My background spans backend architecture, 
-          frontend development, and DevOps, refined through a long-term internship at Hexmos. 
-          I specialize in creating scalable developer tools and optimizing AI/LLM workflows 
-          for efficiency and performance.
+          I'm a product-oriented full-stack engineer with hands-on experience in backend, frontend, and DevOps. I've built real-world systems spanning developer tooling, AI-assisted documentation, and search-driven platforms. I thrive on full ownership of features, deep-diving into performance optimization, and bridging the gap between robust backends and intuitive user interfaces.
         </p>
       </div>
     </section>

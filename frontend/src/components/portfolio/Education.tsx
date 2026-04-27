@@ -14,11 +14,11 @@ export function Education() {
                     >
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-2">
                             <h3 className="text-lg font-medium text-white">Bachelor of Engineering in Computer Science</h3>
-                            <span className="text-sm text-zinc-500 font-mono">2019–2023</span>
+                            <span className="text-sm text-zinc-500 font-mono">2019 - 2023</span>
                         </div>
                         <p className="text-zinc-400">Moodlakatte Institute of Technology</p>
                         <p className="text-sm text-zinc-500 mt-4 leading-relaxed italic">
-                            Focused on programming (Java, Python), SQL databases, and computer science fundamentals.
+                            Built strong foundational knowledge in Software Engineering, Algorithms, and Databases.
                         </p>
                     </motion.div>
                 </div>
