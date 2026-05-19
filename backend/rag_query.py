@@ -109,14 +109,7 @@ def call_gemini(prompt: str) -> str:
                 ]
             }
         ]
-    }
-
-    print("--- GEMINI INPUT (prompt sent to API) ---")
-    print("--- END GEMINI INPUT ---")
-
-    response = requests.post(GEMINI_API_URL, headers=headers, json=body, timeout=30)
-    response.raise_for_status()
-    data = response.json()
+    }nse.json()
 
     try:
         candidates = data.get("candidates", [])
@@ -127,10 +120,7 @@ def call_gemini(prompt: str) -> str:
         if not text:
             raise KeyError
         return text.strip()
-    except (KeyError, IndexError, TypeError):
-        return f"Unexpected response format from Gemini API: {data}"
-
-
+    except (KeyError, Index
 def answer_question(question: str) -> str:
     """High-level RAG pipeline: retrieve context, build prompt, call Gemini."""
     context_chunks = retrieve_context(question, top_k=3)
