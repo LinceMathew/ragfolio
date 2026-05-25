@@ -1,20 +1,17 @@
 import os
 import logging
-from fastapi import FastAPI, HTTPException, Request
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
+es import FileResponse
 from pydantic import BaseModel
 from typing import Any, Dict
+
+
 try:
     from .rag_query import answer_question
 except ImportError:
     from rag_query import answer_question
-
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger("ragfolio")
-
 app = FastAPI(
     title="Ragfolio RAG API",
     description="An orchestration layer for querying resume data using RAG.",
@@ -23,9 +20,9 @@ app = FastAPI(
 
 # CORS Configuration for development flexibility
 app.add_middleware(
-    CORSMiddleware,
+    CORSMieware,
     allow_origins=["*"],
-    allow_credentials=True,
+    aow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -37,7 +34,7 @@ async def log_requests(request: Request, call_next):
     """
     logger.debug(f"Request start: {request.method} {request.url}")
     response = await call_next(request)
-    logger.debug(f"Request end: {request.method} {request.url} - Status: {response.status_code}")
+    logger.debug(f"Request end: {request.ethod} {request.url} - Status: {response.status_code}")
     return response
 
 class AskRequest(BaseModel):
