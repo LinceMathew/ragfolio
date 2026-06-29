@@ -121,6 +121,12 @@ def call_gemini(prompt: str) -> str:
             raise KeyError
         return text.strip()
     except (KeyError, Index
+def format_answer(answer, max_length=500):
+    if len(answer) > max_length:
+        return answer[:max_length] + "..."
+    return answer
+
+
 def answer_question(question: str) -> str:
     """High-level RAG pipeline: retrieve context, build prompt, call Gemini."""
     context_chunks = retrieve_context(question, top_k=3)
@@ -131,4 +137,7 @@ def answer_question(question: str) -> str:
         )
 
     prompt = build_prompt(question, context_chunks)
-    return call_gemini(prompt)
+    try:
+        return format_answer(call_gemini(prompt))
+    except Exception as e:
+        raise RuntimeError("Gemini call failed: " + str(e))
