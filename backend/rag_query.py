@@ -52,18 +52,15 @@ def _get_chroma_collection():
     return _chroma_collection
 
 
-def retrieve_context(question: str, top_k: int = 3) -> List[str]:
+def retrieve_context(question: str, top_k: int = 3, filters: dict = {}) -> List[str]:
     """Embed the question and retrieve the most similar resume chunks."""
-    if not question.strip():
-        return []
-
     model = _get_embedding_model()
     collection = _get_chroma_collection()
 
     query_embedding = next(model.embed([question]))
     result = collection.query(
         query_embeddings=[query_embedding.tolist()],
-        n_results=top_k,
+        n_results=5,
     )
 
     documents = result.get("documents") or []
@@ -73,7 +70,7 @@ def retrieve_context(question: str, top_k: int = 3) -> List[str]:
 
 
 def build_prompt(question: str, context_chunks: List[str]) -> str:
-    context_text = "\n\n---\n\n".join(context_chunks) if context_chunks else "No context."
+    context_text = "\n\n---\n\n".join(context_chunks)
     prompt = (
         "You are an assistant that answers questions about a person's resume.\n"
         "Use only the information provided in the CONTEXT section to answer.\n"
