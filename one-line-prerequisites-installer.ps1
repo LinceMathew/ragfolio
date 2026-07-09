@@ -111,23 +111,7 @@ function Install-Uv {
     try {
         $uvVersion = & uv --version 2>&1
         if ($uvVersion -match 'uv') {
-            Write-Skip "uv" "already installed ($uvVersion)"
-            Add-ToPath "$env:USERPROFILE\.local\bin"
-            Refresh-EnvironmentPath
-            return
-        }
-    } catch {
-        # uv not found — proceed with install
-    }
-
-    # $LASTEXITCODE -ne 0) {
-            throw "uv installer exited with code $LASTEXITCODE"
-        }
-
-        Write-Ok "uv installed"
-    } catch {
-        Write-Warn "uv installation failed: $_"
-        return
+            Write
     }
 
     # Add uv to PATH for this session and persistently
