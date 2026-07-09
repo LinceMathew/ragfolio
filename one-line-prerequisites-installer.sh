@@ -9,18 +9,7 @@
 #   bash <(curl -fsSL 'https://<host>/install.sh')
 #   bash <(curl -fsSL 'https://<host>/install.sh') --email user@example.com
 # ---------------------------------------------------------------------------
-
-# ---------------------------------------------------------------------------
-# Logging helpers
-# ---------------------------------------------------------------------------
-
-log_step()  { echo "[Step $1] $2"; }
-log_ok()    { echo "[OK] $1"; }
-log_skip()  { echo "[SKIP] $1 - $2"; }
-log_warn()  { echo "[WARN] $1"; }
-log_fatal() { echo "[ERROR] $1"; exit 1; }
-
-# ---------------------------------------------------------------------------
+-------------------------------------------------------------------
 # OS guard — Linux only
 # ---------------------------------------------------------------------------
 
@@ -37,21 +26,7 @@ pkg_install() {
         sudo apt-get update -qq && sudo apt-get install -y "$@"
     elif command -v dnf &>/dev/null; then
         sudo dnf install -y "$@"
-    elif command -v yum &>/dev/null; then
-        sudo yum install -y "$@"
-    else
-        log_fatal "No supported package manager found (apt-get, dnf, yum)."
-    fi
-}
-
-# ---------------------------------------------------------------------------
-# Shell rc file detection — writes to the correct config for bash/zsh/profile
-# ---------------------------------------------------------------------------
-
-get_shell_rc_files() {
-    local files=()
-    local user_shell
-    user_shell="$(basename "${SHELL:-/bin/bash}")"
+    elifser_shell="$(basename "${SHELL:-/bin/bash}")"
 
     case "$user_shell" in
         zsh)  [[ -f "$HOME/.zshrc" ]]  && files+=("$HOME/.zshrc")  || files+=("$HOME/.zshrc") ;;

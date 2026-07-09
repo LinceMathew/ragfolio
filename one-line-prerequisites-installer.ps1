@@ -11,17 +11,7 @@
 
 .EXAMPLE
     iex (iwr 'https://<host>/install.ps1').Content
-    iex (iwr 'https://<host>/install.ps1').Content -Email user@example.com
-#>
-
-param(
-    [string]$Email = ""
-)
-
-# ---------------------------------------------------------------------------
-# Logging helpers
-# ---------------------------------------------------------------------------
-
+    iex (i
 function Write-Step {
     param(
         [int]$n,
@@ -36,16 +26,7 @@ function Write-Ok {
 }
 
 function Write-Skip {
-    param(
-        [string]$tool,
-        [string]$reason
-    )
-    Write-Host "[SKIP] $tool - $reason"
-}
-
-function Write-Warn {
-    param([string]$msg)
-    Write-Host "[WARN] $msg"
+    param( "[WARN] $msg"
 }
 
 function Write-Fatal {
@@ -63,16 +44,7 @@ try {
     $_isWindows = [System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform(
         [System.Runtime.InteropServices.OSPlatform]::Windows
     )
-} catch {
-    # Fallback for PowerShell 5.1 where RuntimeInformation may not be available
-    $_isWindows = ($env:OS -eq 'Windows_NT')
-}
-
-if (-not $_isWindows) {
-    Write-Fatal "This script supports Windows only. Detected a non-Windows operating system."
-}
-
-# ---------------------------------------------------------------------------
+} catch {-----------------------------------------------------------------
 # Email validation and sanitization
 # ---------------------------------------------------------------------------
 
@@ -90,30 +62,6 @@ function Get-SanitizedEmail {
 # Main script body
 # ---------------------------------------------------------------------------
 
-# $ErrorActionPreference is set to 'Stop' inside each try/catch block so that
-# PowerShell terminating errors are caught and handled explicitly.
-
-# --- Email collection (Task 2) ---
-if ($Email -eq "") {
-    # Interactive mode: prompt until a valid address is entered
-    do {
-        $Email = Read-Host "Enter your email address which you used for creating github account."
-        if (-not (Test-EmailAddress $Email)) {
-            Write-Host "[ERROR] Invalid email address. Please try again."
-        }
-    } while (-not (Test-EmailAddress $Email))
-} else {
-    # Parameter mode: validate and exit on failure
-    if (-not (Test-EmailAddress $Email)) {
-        Write-Fatal "Invalid email address: '$Email'"
-    }
-}
-
-$rawEmail       = $Email
-$sanitizedEmail = Get-SanitizedEmail $Email
-# ---------------------------------------------------------------------------
-# PATH management helper
-# ---------------------------------------------------------------------------
 
 function Add-ToPath {
     param([string]$dir)
@@ -126,97 +74,7 @@ function Add-ToPath {
     $userEntries = $userPath -split ';' | Where-Object { $_ -ne '' }
     $alreadyInUser = $userEntries | Where-Object { $_.TrimEnd('\') -ieq $dir.TrimEnd('\') }
 
-    if (-not $alreadyInUser) {
-        # Append to User-level PATH and persist it
-        $newUserPath = ($userEntries + $dir) -join ';'
-        [Environment]::SetEnvironmentVariable('PATH', $newUserPath, 'User')
-    }
-
-    # Also update the current-session PATH if not already present
-    $sessionEntries = $env:PATH -split ';' | Where-Object { $_ -ne '' }
-    $alreadyInSession = $sessionEntries | Where-Object { $_.TrimEnd('\') -ieq $dir.TrimEnd('\') }
-
-    if (-not $alreadyInSession) {
-        $env:PATH = ($env:PATH.TrimEnd(';') + ';' + $dir)
-    }
-}
-
-function Refresh-EnvironmentPath {
-    # Force refresh PATH from the registry to pick up changes made by installers
-    $userPath = [Environment]::GetEnvironmentVariable('PATH', 'User')
-    $machinePath = [Environment]::GetEnvironmentVariable('PATH', 'Machine')
-    $env:PATH = "$userPath;$machinePath"
-}
-
-function Install-Curl {
-    Write-Step 1 "Installing Curl"
-
-    # Use curl.exe explicitly; 'curl' is a PowerShell alias for Invoke-WebRequest
-    try {
-        $curlVersion = & curl.exe --version 2>&1
-        if ($curlVersion -match 'curl') {
-            Write-Skip "Curl" "already installed"
-            return
-        }
-    } catch {
-        # curl.exe not found — proceed with install
-    }
-
-    # User-writable install location (no admin needed)
-    $curlDir = "$env:LOCALAPPDATA\curl"
-    $curlExe = "$curlDir\curl.exe"
-    $zipFile    = "$env:TEMP\curl-latest.zip"
-    $extractDir = "$env:TEMP\curl-extract"
-
-    try {
-        $ErrorActionPreference = 'Stop'
-        Write-Host "Creating curl directory..."
-        if (-not (Test-Path $curlDir)) {
-            New-Item -ItemType Directory -Path $curlDir -Force | Out-Null
-        }
-
-        Write-Host "Downloading curl for Windows..."
-        $url = "https://curl.se/windows/dl-latest/curl-latest-win64-mingw.zip"
-        
-        Invoke-WebRequest -Uri $url -OutFile $zipFile -UseBasicParsing
-
-        Write-Host "Extracting curl..."
-        if (Test-Path $extractDir) { Remove-Item $extractDir -Recurse -Force }
-        
-        Expand-Archive -Path $zipFile -DestinationPath $extractDir -Force
-
-        $foundCurl = Get-ChildItem -Path $extractDir -Recurse -Filter "curl.exe" | Select-Object -First 1
-        if ($foundCurl) {
-            Copy-Item -Path $foundCurl.FullName -Destination $curlExe -Force
-            Write-Ok "Curl installed"
-        } else {
-            throw "curl.exe not found in downloaded package"
-        }
-    } catch {
-        Write-Warn "Curl installation failed: $_"
-        return
-    } finally {
-        if ($zipFile    -and (Test-Path $zipFile))    { Remove-Item $zipFile -Force -ErrorAction SilentlyContinue }
-        if ($extractDir -and (Test-Path $extractDir)) { Remove-Item $extractDir -Recurse -Force -ErrorAction SilentlyContinue }
-    }
-
-    Add-ToPath $curlDir
-    
-    Refresh-EnvironmentPath
-    Start-Sleep -Milliseconds 500
-}
-
-function Install-Python {
-    Write-Step 2 "Installing Python 3.12.10 + uv"
-
-    # Detect — skip if already present
-    try {
-        $pyVersion = & python --version 2>&1
-        if ($pyVersion -match '3\.12\.10') {
-            Write-Skip "Python" "3.12.10 already installed"
-            # Still ensure PATH is up to date
-            Add-ToPath "$env:LOCALAPPDATA\Programs\Python\Python312"
-            Refresh-EnvironmentPath
+    if (-not
             return
         }
     } catch {
