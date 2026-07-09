@@ -84,10 +84,7 @@ function Add-ToPath {
     # Download and install
     $installer = "$env:TEMP\python-3.12.10-amd64.exe"
     $url       = "https://www.python.org/ftp/python/3.12.10/python-3.12.10-amd64.exe"
-
-    try {
-        $ErrorActionPreference = 'Stop'
-        Write-Host "Downloading Python 3.12.10..."
+    Write-Host "Downloading Python 3.12.10..."
         curl.exe -L -o $installer $url
 
         Write-Host "Running Python installer silently..."
@@ -104,14 +101,7 @@ function Add-ToPath {
         return
     } finally {
         if (Test-Path $installer) { Remove-Item $installer -Force -ErrorAction SilentlyContinue }
-    }
-
-    # Add Python to PATH for this session and persistently
-    Add-ToPath "$env:LOCALAPPDATA\Programs\Python\Python312"
-    
-    # Refresh environment to pick up installer's PATH changes
-    Refresh-EnvironmentPath
-    Start-Sleep -Milliseconds 500
+    } -Milliseconds 500
 }
 
 function Install-Uv {
@@ -130,12 +120,7 @@ function Install-Uv {
         # uv not found — proceed with install
     }
 
-    # Install via Astral's official installer script
-    try {
-        $ErrorActionPreference = 'Stop'
-        Write-Host "Downloading and running uv installer..."
-        & powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
-        if ($LASTEXITCODE -ne 0) {
+    # $LASTEXITCODE -ne 0) {
             throw "uv installer exited with code $LASTEXITCODE"
         }
 
