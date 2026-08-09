@@ -60,6 +60,11 @@ export function Chatbot() {
     }
   }
 
+  const handleRetry = () => {
+    const lastUserMessage = messages[messages.length - 2]
+    handleSend(lastUserMessage.content)
+  }
+
   return (
     <section className="py-12 px-4 border-t border-zinc-800/50 relative">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
@@ -116,6 +121,17 @@ export function Chatbot() {
               </motion.div>
             )}
           </div>
+          {messages.length > 0 && (
+            <div className="px-4 pt-2">
+              <button
+                type="button"
+                onClick={handleRetry}
+                className="text-xs text-zinc-500 hover:text-zinc-300 transition-colors"
+              >
+                Retry last message
+              </button>
+            </div>
+          )}
           <ChatInput onSend={handleSend} disabled={loading} isFirstTime={messages.length === 0} />
         </motion.div>
       </div>
