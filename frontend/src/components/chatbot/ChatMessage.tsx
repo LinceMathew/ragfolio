@@ -8,6 +8,14 @@ interface ChatMessageProps {
   content: string
 }
 
+// Turns **bold** markdown into <strong> tags and newlines into <br /> so
+// assistant responses render with basic formatting.
+const formatContent = (text: string) => {
+  return text
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\n/g, '<br />')
+}
+
 export function ChatMessage({ role, content }: ChatMessageProps) {
   const isUser = role === 'user'
   const [copied, setCopied] = useState(false)
@@ -45,7 +53,10 @@ export function ChatMessage({ role, content }: ChatMessageProps) {
           <span className={`text-[10px] uppercase tracking-widest font-bold opacity-50 ${isUser ? 'text-right' : 'text-left'}`}>
             {isUser ? 'You' : 'Assistant'}
           </span>
-          <p className="text-[14.5px] leading-relaxed whitespace-pre-wrap">{content}</p>
+          <p
+            className="text-[14.5px] leading-relaxed whitespace-pre-wrap"
+            dangerouslySetInnerHTML={{ __html: formatContent(content) }}
+          />
         </div>
       </div>
     </motion.div>
