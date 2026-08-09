@@ -2,6 +2,8 @@ import { useState } from 'react'
 import type { FormEvent } from 'react'
 import { motion } from 'framer-motion'
 
+const MAX_MESSAGE_LENGTH = 500
+
 interface ChatInputProps {
   onSend: (message: string) => void
   disabled?: boolean
@@ -10,6 +12,7 @@ interface ChatInputProps {
 
 export function ChatInput({ onSend, disabled, isFirstTime }: ChatInputProps) {
   const [value, setValue] = useState('')
+  const remaining = MAX_MESSAGE_LENGTH - value.length
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
@@ -44,11 +47,17 @@ export function ChatInput({ onSend, disabled, isFirstTime }: ChatInputProps) {
         <input
           type="text"
           value={value}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={(e) => setValue(e.target.value.slice(0, MAX_MESSAGE_LENGTH))}
           placeholder="Ask anything about the portfolio..."
           disabled={disabled}
+          maxLength={MAX_MESSAGE_LENGTH}
           className="w-full bg-zinc-900/80 border border-zinc-800 rounded-xl px-4 py-3 text-sm text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all"
         />
+        {remaining <= 50 && (
+          <span className="absolute -bottom-5 right-1 text-[11px] text-zinc-500">
+            {remaining} left
+          </span>
+        )}
       </motion.div>
       <motion.button
         whileHover={{ scale: 1.02 }}
