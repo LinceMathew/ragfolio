@@ -36,6 +36,22 @@ export function Projects() {
               <span className="text-zinc-500">Stack: Astro, HTML/CSS, Meilisearch</span>
             </p>
           </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            whileHover={{ scale: 1.02 }}
+            className="p-6 rounded-xl bg-zinc-900/40 border border-zinc-800 hover:border-zinc-700 transition-colors cursor-default"
+          >
+            <h3 className="font-medium text-white text-lg">Ragfolio</h3>
+            <p className="text-sm text-zinc-400 mt-2 leading-relaxed">
+              This very site - a RAG-powered portfolio chatbot that answers questions about my experience using a vector store built from my resume.
+              <br /><br />
+              <span className="text-zinc-500">Stack: FastAPI, ChromaDB, FastEmbed, React, Gemini</span>
+            </p>
+          </motion.div>
         </div>
       </div>
     </section>
