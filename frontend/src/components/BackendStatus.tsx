@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-const POLL_MS = 10000
+const POLL_MS = 15000
 const TIMEOUT_MS = 5000
 
 export function BackendStatus() {
