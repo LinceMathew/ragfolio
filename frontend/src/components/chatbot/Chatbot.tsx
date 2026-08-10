@@ -5,8 +5,13 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 type Message = { role: 'user' | 'assistant'; content: string }
 
+const HISTORY_KEY = 'ragfolio_chat_history'
+
 export function Chatbot() {
-  const [messages, setMessages] = useState<Message[]>([])
+  const [messages, setMessages] = useState<Message[]>(() => {
+    const saved = localStorage.getItem(HISTORY_KEY)
+    return saved ? JSON.parse(saved) : []
+  })
   const [loading, setLoading] = useState(false)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
 
@@ -22,6 +27,10 @@ export function Chatbot() {
   useEffect(() => {
     scrollToBottom()
   }, [messages, loading])
+
+  useEffect(() => {
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(messages))
+  }, [messages])
 
   const handleSend = async (content: string) => {
     if (!content.trim()) return
