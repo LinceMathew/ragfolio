@@ -8,11 +8,13 @@ import { Testimonials } from './components/portfolio/Testimonials'
 import { Education } from './components/portfolio/Education'
 import { Footer } from './components/portfolio/Footer'
 import { Chatbot } from './components/chatbot/Chatbot'
+import { BackToTop } from './components/BackToTop'
 
 export default function App() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
+      <BackToTop />
       <main className="flex-1">
         <Hero />
         <Chatbot />
