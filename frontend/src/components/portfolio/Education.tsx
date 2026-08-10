@@ -2,7 +2,7 @@ import { motion } from 'framer-motion'
 
 export function Education() {
     return (
-        <section className="py-12 px-4 border-t border-zinc-800/50">
+        <section id="education" className="py-12 px-4 border-t border-zinc-800/50">
             <div className="max-w-4xl mx-auto">
                 <h2 className="text-2xl font-semibold text-white mb-6">Education</h2>
                 <div className="space-y-6">

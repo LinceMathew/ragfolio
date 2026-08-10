@@ -20,10 +20,14 @@ export function Header() {
         <a href="#" className="font-semibold text-zinc-100 hover:text-white transition-colors">
           Lince Mathew
         </a>
-        <nav className="flex items-center gap-6">
+        <nav className="hidden sm:flex items-center gap-6">
           <BackendStatus />
           <a href="#experience" className="text-sm text-zinc-400 hover:text-white transition-colors">Experience</a>
           <a href="#projects" className="text-sm text-zinc-400 hover:text-white transition-colors">Projects</a>
+          <a href="#education" className="text-sm text-zinc-400 hover:text-white transition-colors">Education</a>
+        </nav>
+        <nav className="flex sm:hidden items-center gap-4">
+          <BackendStatus />
         </nav>
       </div>
     </header>
