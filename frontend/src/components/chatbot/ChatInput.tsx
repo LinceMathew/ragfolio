@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import { motion } from 'framer-motion'
 
@@ -13,6 +13,13 @@ interface ChatInputProps {
 export function ChatInput({ onSend, disabled, isFirstTime }: ChatInputProps) {
   const [value, setValue] = useState('')
   const remaining = MAX_MESSAGE_LENGTH - value.length
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    if (isFirstTime) {
+      inputRef.current?.focus()
+    }
+  }, [isFirstTime])
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
@@ -45,6 +52,7 @@ export function ChatInput({ onSend, disabled, isFirstTime }: ChatInputProps) {
         style={{ borderRadius: '12px' }}
       >
         <input
+          ref={inputRef}
           type="text"
           value={value}
           onChange={(e) => setValue(e.target.value.slice(0, MAX_MESSAGE_LENGTH))}
