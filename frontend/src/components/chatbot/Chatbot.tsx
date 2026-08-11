@@ -74,6 +74,11 @@ export function Chatbot() {
     handleSend(lastUserMessage.content)
   }
 
+  const handleClear = () => {
+    setMessages([])
+    localStorage.removeItem(HISTORY_KEY)
+  }
+
   return (
     <section className="py-12 px-4 border-t border-zinc-800/50 relative">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
@@ -131,13 +136,20 @@ export function Chatbot() {
             )}
           </div>
           {messages.length > 0 && (
-            <div className="px-4 pt-2">
+            <div className="px-4 pt-2 flex items-center gap-4">
               <button
                 type="button"
                 onClick={handleRetry}
                 className="text-xs text-zinc-500 hover:text-zinc-300 transition-colors"
               >
                 Retry last message
+              </button>
+              <button
+                type="button"
+                onClick={handleClear}
+                className="text-xs text-zinc-500 hover:text-zinc-300 transition-colors"
+              >
+                Clear chat
               </button>
             </div>
           )}
