@@ -73,6 +73,9 @@ async def ask(request: AskRequest):
             detail="Question cannot be empty or whitespace only.",
         )
 
+    if len(request.question) > 1000:
+        raise HTTPException(status_code=400, detail="Question is too long.")
+
     try:
         # Log the incoming question
         logger.debug(f"Incoming question: {request.question}")
